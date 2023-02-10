@@ -3,7 +3,7 @@ import { Button, Header, Icon, Segment } from "semantic-ui-react";
 
 export default function NotFound() {
   return (
-    <Segment>
+    <Segment placeholder>
       <Header icon>
         <Icon name="search" />
         Oops - We've looked everywere but could not find what you are looking
