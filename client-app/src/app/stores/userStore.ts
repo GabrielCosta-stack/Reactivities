@@ -19,7 +19,7 @@ export default class UserStore {
     try {
       const user = await agent.Account.login(creds);
       store.commonStore.setToken(user.token);
-
+      console.log(user);
       runInAction(() => (this.user = user));
       router.navigate("/activities");
       store.modalStore.closeModal();
