@@ -3,6 +3,7 @@ import { request } from "http";
 import { toast } from "react-toastify";
 
 import { Activity, ActivityFormValues } from "../models/activity";
+import { Photo, Profile } from "../models/profile";
 import { User, UserFormValues } from "../models/user";
 import { router } from "../router/Routes";
 import { store } from "../stores/store";
@@ -97,9 +98,25 @@ const Account = {
     requests.post<User>("/account/register", user),
 };
 
+const Profiles = {
+  get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
+  uploadPhoto: (file: Blob) => {
+    let formData = new FormData();
+    // this name (File) must match the name of the property at the API
+    formData.append("File", file);
+
+    return axios.post<Photo>("photos", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+  setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
+  deletePhoto: (id: string) => requests.del(`/photos/${id}`),
+};
+
 const agent = {
   Acitivities,
   Account,
+  Profiles,
 };
 
 export default agent;
