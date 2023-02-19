@@ -27,7 +27,10 @@ namespace API.Extensions
             services.AddCors(opt => {
                 opt.AddPolicy("CorsPolicy", policy => {
                     // Allow any HTTP method
-                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+                    policy.AllowAnyMethod().AllowAnyHeader()
+                    // AllowCredentials is only added because chat Hub connection
+                    .AllowCredentials()
+                    .WithOrigins("http://localhost:3000");
                 });
             });
 
@@ -39,6 +42,7 @@ namespace API.Extensions
             services.AddScoped<IUserAccessor, UserAcessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+            services.AddSignalR();
 
 
             return services;
